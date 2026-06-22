@@ -23,6 +23,30 @@ function iniciales(nombre: string): string {
   return nombre.trim().charAt(0).toUpperCase();
 }
 
+const CONFETTI_COLORS = ["#8e2d44", "#c06078", "#d4c3b3", "#ebe3db", "#f5f3f2"];
+
+function Confetti() {
+  // Valores deterministas (por índice) para evitar desajustes de hidratación.
+  return (
+    <div className="confetti" aria-hidden="true">
+      {Array.from({ length: 20 }).map((_, i) => (
+        <span
+          key={i}
+          className="confetti__piece"
+          style={{
+            left: `${(i * 47) % 100}%`,
+            background: CONFETTI_COLORS[i % CONFETTI_COLORS.length],
+            animationDelay: `${((i * 41) % 280) / 100}s`,
+            animationDuration: `${2.6 + (i % 5) * 0.45}s`,
+            width: i % 3 === 0 ? "6px" : "8px",
+            height: i % 3 === 0 ? "10px" : "7px",
+          }}
+        />
+      ))}
+    </div>
+  );
+}
+
 export default function Home() {
   const [data, setData] = useState<Data | null>(null);
   const [historial, setHistorial] = useState<Ganador[] | null>(null);
@@ -111,7 +135,8 @@ export default function Home() {
   function Podio({ r, pos }: { r: Resultado; pos: number }) {
     const esLider = pos === 1 && r.votos > 0;
     return (
-      <article className={`pod${pos === 1 ? " pod--1" : ""}`}>
+      <article className={`pod${pos === 1 ? " pod--1" : ""}${esLider ? " pod--ganador" : ""}`}>
+        {esLider && <Confetti />}
         <div className="pod__rank">{pos}</div>
         <div className="pod__avatar">{iniciales(nombrePorSlug(r.slug))}</div>
         <div className="pod__main">

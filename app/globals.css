@@ -235,6 +235,42 @@ body {
   opacity: 0.12;
   pointer-events: none;
 }
+/* Confeti del ganador (#1 con votos) */
+.confetti {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 1;
+}
+.confetti__piece {
+  position: absolute;
+  top: -14px;
+  border-radius: 1px;
+  opacity: 0;
+  animation-name: confetti-fall;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+@keyframes confetti-fall {
+  0% {
+    transform: translateY(-14px) rotate(0deg);
+    opacity: 0;
+  }
+  12% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(180px) rotate(420deg);
+    opacity: 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .confetti {
+    display: none;
+  }
+}
+
 .pod__rank {
   font-family: var(--font-display);
   font-weight: 300;
@@ -244,6 +280,8 @@ body {
   text-align: center;
   flex: 0 0 auto;
   color: var(--fg-muted);
+  position: relative;
+  z-index: 2;
 }
 .pod--1 .pod__rank {
   font-size: 2.75rem;
@@ -263,6 +301,7 @@ body {
   color: var(--fg-inverse);
   background: var(--color-negro);
   position: relative;
+  z-index: 2;
 }
 .pod--1 .pod__avatar {
   background: var(--color-acento);
@@ -274,6 +313,7 @@ body {
   min-width: 0;
   flex: 1 1 auto;
   position: relative;
+  z-index: 2;
 }
 .pod__name {
   font-family: var(--font-display);
