@@ -528,6 +528,66 @@ body {
   color: var(--fg-muted);
 }
 
+/* ---------- Bases del concurso ---------- */
+.bases {
+  background: var(--bg-subtle);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  padding: 22px 20px;
+}
+.bases__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.base {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+}
+.base__num {
+  flex: 0 0 auto;
+  width: 30px;
+  height: 30px;
+  border-radius: var(--radius-full);
+  display: grid;
+  place-items: center;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 1rem;
+  color: var(--fg-inverse);
+  background: var(--color-acento);
+}
+.base__text {
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: 1.5;
+  color: var(--fg-secondary);
+  padding-top: 3px;
+}
+.base__text strong {
+  font-weight: 500;
+  color: var(--fg-primary);
+}
+.bases__nota {
+  margin: 18px 0 0;
+  padding: 14px 16px;
+  border-radius: var(--radius-md);
+  background: rgba(142, 45, 68, 0.07);
+  border: 1px solid rgba(142, 45, 68, 0.2);
+  font-size: 0.9375rem;
+  line-height: 1.5;
+  color: var(--color-acento-dark);
+}
+.bases__nota strong {
+  font-weight: 500;
+  color: var(--color-acento);
+}
+
 /* ---------- Salón de la fama ---------- */
 .ganadores {
   list-style: none;

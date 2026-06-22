@@ -192,7 +192,42 @@ export default function Home() {
           )}
         </section>
 
-        {/* 2 · Votar (desplegable) */}
+        {/* 2 · Bases del concurso */}
+        <section className="section">
+          <div className="section__head">
+            <p className="eyebrow">Bases</p>
+            <h2>Cómo funciona</h2>
+          </div>
+
+          <div className="bases">
+            <ol className="bases__list">
+              <li className="base">
+                <span className="base__num">1</span>
+                <span className="base__text">
+                  El ganador del mes se lleva un <strong>pastelito</strong>. 🧁
+                </span>
+              </li>
+              <li className="base">
+                <span className="base__num">2</span>
+                <span className="base__text">
+                  Se cuelga un <strong>póster del ganador en la cocina</strong>.
+                </span>
+              </li>
+              <li className="base">
+                <span className="base__num">3</span>
+                <span className="base__text">
+                  El ganador se <strong>anuncia a finales de cada mes</strong>.
+                </span>
+              </li>
+            </ol>
+            <p className="bases__nota">
+              <strong>Efecto retroactivo:</strong> el póster que se cuelga en la cocina
+              corresponde al ganador del <strong>mes anterior</strong>.
+            </p>
+          </div>
+        </section>
+
+        {/* 3 · Votar (desplegable) */}
         <section className="section">
           <div className="vote">
             <button
@@ -256,7 +291,7 @@ export default function Home() {
           </div>
         </section>
 
-        {/* 3 · Clasificación completa */}
+        {/* 4 · Clasificación completa */}
         <section className="section">
           <div className="section__head">
             <p className="eyebrow">Clasificación</p>
@@ -288,7 +323,7 @@ export default function Home() {
           </ol>
         </section>
 
-        {/* 4 · Salón de la fama (ganadores anteriores) */}
+        {/* 5 · Salón de la fama (ganadores anteriores) */}
         <section className="section">
           <div className="section__head">
             <p className="eyebrow">Salón de la fama</p>
