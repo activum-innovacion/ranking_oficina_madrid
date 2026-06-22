@@ -11,6 +11,13 @@ type Data = {
   total: number;
   persistente: boolean;
 };
+type Ganador = {
+  periodo: string;
+  etiqueta: string;
+  slug: string;
+  nombre: string;
+  votos: number;
+};
 
 function iniciales(nombre: string): string {
   return nombre.trim().charAt(0).toUpperCase();
@@ -18,6 +25,7 @@ function iniciales(nombre: string): string {
 
 export default function Home() {
   const [data, setData] = useState<Data | null>(null);
+  const [historial, setHistorial] = useState<Ganador[] | null>(null);
   const [seleccion, setSeleccion] = useState<string | null>(null);
   const [enviando, setEnviando] = useState(false);
   const [yaVotado, setYaVotado] = useState(false);
@@ -41,8 +49,19 @@ export default function Home() {
     }
   }
 
+  async function cargarHistorial() {
+    try {
+      const res = await fetch("/api/historial", { cache: "no-store" });
+      const json = await res.json();
+      setHistorial(json.ganadores ?? []);
+    } catch {
+      setHistorial([]);
+    }
+  }
+
   useEffect(() => {
     cargar();
+    cargarHistorial();
   }, []);
 
   // Sincroniza el flag local con el periodo real del servidor.
@@ -267,6 +286,41 @@ export default function Home() {
               );
             })}
           </ol>
+        </section>
+
+        {/* 4 · Salón de la fama (ganadores anteriores) */}
+        <section className="section">
+          <div className="section__head">
+            <p className="eyebrow">Salón de la fama</p>
+            <h2>Ganadores anteriores</h2>
+          </div>
+
+          {historial && historial.length > 0 ? (
+            <ul className="ganadores">
+              {historial.map((g) => (
+                <li key={g.periodo} className="ganador">
+                  <div className="ganador__avatar">{iniciales(g.nombre)}</div>
+                  <div className="ganador__main">
+                    <span className="ganador__mes">{g.etiqueta}</span>
+                    <span className="ganador__nombre">{g.nombre}</span>
+                  </div>
+                  <div className="ganador__votos">
+                    <span className="ganador__pastelito" aria-hidden="true">
+                      🧁
+                    </span>
+                    <span>
+                      {g.votos} voto{g.votos === 1 ? "" : "s"}
+                    </span>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p className="ganadores__empty">
+              Todavía no hay ganadores anteriores. El primer empleado del mes se
+              proclamará el 1 de julio. 🧁
+            </p>
+          )}
         </section>
       </main>
 

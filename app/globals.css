@@ -528,6 +528,80 @@ body {
   color: var(--fg-muted);
 }
 
+/* ---------- Salón de la fama ---------- */
+.ganadores {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.ganador {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 16px;
+  border-radius: var(--radius-lg);
+  background: var(--bg-muted);
+  border: 1px solid var(--border-subtle);
+}
+.ganador__avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-full);
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 1.125rem;
+  color: var(--fg-inverse);
+  background: var(--color-acento);
+}
+.ganador__main {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+.ganador__mes {
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--fg-accent);
+}
+.ganador__nombre {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 1.25rem;
+  line-height: 1.2;
+  color: var(--fg-primary);
+}
+.ganador__votos {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.8125rem;
+  color: var(--fg-muted);
+  white-space: nowrap;
+}
+.ganador__pastelito {
+  font-size: 18px;
+  line-height: 1;
+}
+.ganadores__empty {
+  margin: 0;
+  padding: 22px 18px;
+  border-radius: var(--radius-lg);
+  background: var(--bg-muted);
+  border: 1px dashed var(--border-default);
+  color: var(--fg-secondary);
+  font-size: 0.9375rem;
+  line-height: 1.5;
+}
+
 /* ---------- Footer ---------- */
 .footer {
   border-top: 1px solid var(--border-subtle);

@@ -1,5 +1,5 @@
 import { Redis } from "@upstash/redis";
-import { EMPLEADOS, SLUGS } from "./empleados";
+import { EMPLEADOS, SLUGS, nombrePorSlug } from "./empleados";
 
 // ---------------------------------------------------------------------------
 // Periodo de votación: clave por mes en zona horaria de Madrid.
@@ -102,4 +102,66 @@ export async function obtenerResultados(): Promise<{
   const total = resultados.reduce((acc, r) => acc + r.votos, 0);
 
   return { periodo, resultados, total, persistente: !!redis };
+}
+
+// ---------------------------------------------------------------------------
+// Salón de la fama: ganadores de meses anteriores.
+// Los meses pasados quedan "congelados" en sus claves de Redis, así que el
+// ganador de cada mes se calcula leyendo esas claves. Sin cron ni snapshots.
+// ---------------------------------------------------------------------------
+export type Ganador = {
+  periodo: string;
+  etiqueta: string;
+  slug: string;
+  nombre: string;
+  votos: number;
+};
+
+function periodosAnteriores(actual: string, n: number): string[] {
+  let [year, month] = actual.split("-").map(Number); // month 1-12
+  const salida: string[] = [];
+  for (let i = 0; i < n; i++) {
+    month -= 1;
+    if (month === 0) {
+      month = 12;
+      year -= 1;
+    }
+    salida.push(`${year}-${String(month).padStart(2, "0")}`);
+  }
+  return salida;
+}
+
+function ganadorDeConteos(conteos: Record<string, number>): { slug: string; votos: number } | null {
+  let mejor: { slug: string; votos: number } | null = null;
+  // Recorremos en el orden de EMPLEADOS para que los empates sean estables.
+  for (const e of EMPLEADOS) {
+    const votos = Number(conteos[e.slug] ?? 0);
+    if (votos > 0 && (!mejor || votos > mejor.votos)) {
+      mejor = { slug: e.slug, votos };
+    }
+  }
+  return mejor;
+}
+
+export async function obtenerHistorial(meses = 12): Promise<Ganador[]> {
+  if (!redis) return []; // En memoria no hay meses pasados.
+
+  const periodos = periodosAnteriores(periodoActual(), meses);
+  const ganadores: Ganador[] = [];
+
+  for (const periodo of periodos) {
+    const data = (await redis.hgetall<Record<string, number>>(clavePeriodo(periodo))) ?? {};
+    const ganador = ganadorDeConteos(data);
+    if (ganador) {
+      ganadores.push({
+        periodo,
+        etiqueta: etiquetaPeriodo(periodo),
+        slug: ganador.slug,
+        nombre: nombrePorSlug(ganador.slug) ?? ganador.slug,
+        votos: ganador.votos,
+      });
+    }
+  }
+
+  return ganadores; // Más reciente primero.
 }
