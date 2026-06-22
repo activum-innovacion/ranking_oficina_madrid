@@ -21,6 +21,7 @@ export default function Home() {
   const [seleccion, setSeleccion] = useState<string | null>(null);
   const [enviando, setEnviando] = useState(false);
   const [yaVotado, setYaVotado] = useState(false);
+  const [votarAbierto, setVotarAbierto] = useState(false);
   const [mensaje, setMensaje] = useState<{ tipo: "ok" | "err"; texto: string } | null>(
     null
   );
@@ -85,6 +86,31 @@ export default function Home() {
   }
 
   const maxVotos = data ? Math.max(1, ...data.resultados.map((r) => r.votos)) : 1;
+  const top3 = data ? data.resultados.slice(0, 3) : [];
+  const hayVotos = (data?.total ?? 0) > 0;
+
+  function Podio({ r, pos }: { r: Resultado; pos: number }) {
+    const esLider = pos === 1 && r.votos > 0;
+    return (
+      <article className={`pod${pos === 1 ? " pod--1" : ""}`}>
+        <div className="pod__rank">{pos}</div>
+        <div className="pod__avatar">{iniciales(nombrePorSlug(r.slug))}</div>
+        <div className="pod__main">
+          <div className="pod__name">
+            {nombrePorSlug(r.slug)}
+            {esLider && (
+              <span className="premio-pill" aria-hidden="true">
+                🧁 Pastelito
+              </span>
+            )}
+          </div>
+          <span className="pod__votes">
+            <b>{r.votos}</b> {r.votos === 1 ? "voto" : "votos"}
+          </span>
+        </div>
+      </article>
+    );
+  }
 
   return (
     <>
@@ -124,79 +150,111 @@ export default function Home() {
           </div>
         )}
 
-        <section className="panel">
-          <div className="section-head">
-            <div>
-              <p className="eyebrow">Tu voto</p>
-              <h2>Emite tu voto</h2>
-            </div>
-            <span className="muted">
-              {data ? `Votación de ${data.etiqueta}` : ""} · un voto por persona
-            </span>
-          </div>
-
-          <div className="grid" role="radiogroup" aria-label="Candidatos">
-            {EMPLEADOS.map((e) => {
-              const sel = seleccion === e.slug;
-              return (
-                <button
-                  key={e.slug}
-                  type="button"
-                  role="radio"
-                  aria-checked={sel}
-                  className={`candidato${sel ? " selected" : ""}`}
-                  onClick={() => setSeleccion(e.slug)}
-                  disabled={yaVotado || enviando}
-                >
-                  <span className="avatar">{iniciales(e.nombre)}</span>
-                  <span className="nombre">{e.nombre}</span>
-                </button>
-              );
-            })}
-          </div>
-
-          <div className="acciones">
-            <button
-              className="btn"
-              onClick={votar}
-              disabled={!seleccion || yaVotado || enviando}
-            >
-              {enviando ? "Enviando…" : yaVotado ? "Ya has votado" : "Votar"}
-            </button>
-            {mensaje && <span className={`aviso ${mensaje.tipo}`}>{mensaje.texto}</span>}
-            {yaVotado && !mensaje && (
-              <span className="aviso ok">
-                Gracias, ya has votado este mes. Vuelve el día 1.
+        {/* 1 · Top 3 */}
+        <section className="section">
+          <div className="section__head">
+            <p className="eyebrow">Podio</p>
+            <h2>Top 3{data ? ` · ${data.etiqueta}` : ""}</h2>
+            {!hayVotos && (
+              <span className="podium__empty">
+                Aún no hay votos este mes. ¡Sé quien rompa el empate!
               </span>
+            )}
+          </div>
+
+          {top3.length > 0 && (
+            <div className="podium">
+              <Podio r={top3[0]} pos={1} />
+              <div className="podium__row">
+                {top3[1] && <Podio r={top3[1]} pos={2} />}
+                {top3[2] && <Podio r={top3[2]} pos={3} />}
+              </div>
+            </div>
+          )}
+        </section>
+
+        {/* 2 · Votar (desplegable) */}
+        <section className="section">
+          <div className="vote">
+            <button
+              type="button"
+              className="vote__toggle"
+              aria-expanded={votarAbierto}
+              onClick={() => setVotarAbierto((v) => !v)}
+            >
+              <span>{yaVotado ? "Ya has votado este mes" : "Emite tu voto"}</span>
+              <span style={{ display: "flex", alignItems: "center", gap: 10 }}>
+                <span className="estado">
+                  {yaVotado ? "Ver opciones" : "un voto por persona"}
+                </span>
+                <span className="chev" aria-hidden="true">
+                  ▾
+                </span>
+              </span>
+            </button>
+
+            {votarAbierto && (
+              <div className="vote__body">
+                <div className="grid" role="radiogroup" aria-label="Candidatos">
+                  {EMPLEADOS.map((e) => {
+                    const sel = seleccion === e.slug;
+                    return (
+                      <button
+                        key={e.slug}
+                        type="button"
+                        role="radio"
+                        aria-checked={sel}
+                        className={`candidato${sel ? " selected" : ""}`}
+                        onClick={() => setSeleccion(e.slug)}
+                        disabled={yaVotado || enviando}
+                      >
+                        <span className="avatar">{iniciales(e.nombre)}</span>
+                        <span className="nombre">{e.nombre}</span>
+                      </button>
+                    );
+                  })}
+                </div>
+
+                <div className="acciones">
+                  <button
+                    className="btn"
+                    onClick={votar}
+                    disabled={!seleccion || yaVotado || enviando}
+                  >
+                    {enviando ? "Enviando…" : yaVotado ? "Ya has votado" : "Votar"}
+                  </button>
+                  {mensaje && (
+                    <span className={`aviso ${mensaje.tipo}`}>{mensaje.texto}</span>
+                  )}
+                  {yaVotado && !mensaje && (
+                    <span className="aviso ok">
+                      Gracias, ya has votado. Vuelve el día 1.
+                    </span>
+                  )}
+                </div>
+              </div>
             )}
           </div>
         </section>
 
-        <section className="panel">
-          <div className="section-head">
-            <div>
-              <p className="eyebrow">Clasificación</p>
-              <h2>Ranking en directo</h2>
-            </div>
+        {/* 3 · Clasificación completa */}
+        <section className="section">
+          <div className="section__head">
+            <p className="eyebrow">Clasificación</p>
+            <h2>Todos los votos</h2>
             <span className="muted">
-              {data ? `${data.total} voto${data.total === 1 ? "" : "s"} este mes` : "…"}
+              {data ? `${data.total} voto${data.total === 1 ? "" : "s"} en total` : "…"}
             </span>
           </div>
 
           <ol className="rank-list">
             {data?.resultados.map((r, i) => {
-              const topClass = i === 0 ? " top1" : "";
               const pct = Math.round((r.votos / maxVotos) * 100);
               return (
-                <li key={r.slug} className={`rank-item${topClass}`}>
+                <li key={r.slug} className={`rank-item${i === 0 && hayVotos ? " top1" : ""}`}>
                   <div className="rank-pos">{i + 1}</div>
                   <div className="rank-main">
-                    <div className="rank-name">
-                      {nombrePorSlug(r.slug)}
-                      {i === 0 && r.votos > 0 && (
-                        <span className="premio-pill">🧁 Pastelito</span>
-                      )}
-                    </div>
+                    <div className="rank-name">{nombrePorSlug(r.slug)}</div>
                     <div className="bar-track">
                       <div className="bar-fill" style={{ width: `${pct}%` }} />
                     </div>
