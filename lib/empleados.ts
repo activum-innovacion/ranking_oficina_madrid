@@ -19,6 +19,7 @@ export const EMPLEADOS: Empleado[] = [
   { slug: "flavia", nombre: "Flavia" },
   { slug: "carolina", nombre: "Carolina" },
   { slug: "laura", nombre: "Laura" },
+  { slug: "fernando", nombre: "Fernando" },
 ];
 
 export const SLUGS = new Set(EMPLEADOS.map((e) => e.slug));
