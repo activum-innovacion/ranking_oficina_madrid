@@ -88,7 +88,7 @@ body {
   position: relative;
   background-color: var(--color-negro);
   color: var(--fg-inverse);
-  padding: 24px 20px 72px;
+  padding: 24px 20px 32px;
   overflow: hidden;
 }
 .hero::before {
@@ -177,7 +177,7 @@ body {
 /* ---------- Layout ---------- */
 .container {
   max-width: var(--maxw);
-  margin: -52px auto 0;
+  margin: 24px auto 0;
   padding: 0 16px 64px;
   position: relative;
   z-index: 2;
@@ -568,7 +568,7 @@ body {
     --maxw: 760px;
   }
   .hero {
-    padding: 36px 24px 92px;
+    padding: 36px 24px 44px;
   }
   .topbar {
     padding-bottom: 52px;
@@ -584,7 +584,7 @@ body {
     max-width: 52ch;
   }
   .container {
-    margin-top: -64px;
+    margin-top: 28px;
     padding: 0 24px 80px;
   }
   .section {
