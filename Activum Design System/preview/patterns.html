@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<!-- @dsCard group="Brand" name="Patterns" subtitle="Repeating logo-mark pattern — light & dark" viewport="700x280" -->
+<html>
+<head>
+<meta charset="UTF-8">
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Roboto', sans-serif; }
+.grid { display: grid; grid-template-columns: 1fr 1fr; height: 150px; }
+.cell { display: flex; align-items: flex-end; justify-content: flex-start; padding: 14px; background-size: cover; background-position: center; }
+.label { font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; background: rgba(0,0,0,0.2); color: white; padding: 3px 7px; border-radius: 3px; }
+.label-dark { background: rgba(255,255,255,0.15); color: rgba(255,255,255,0.7); }
+.label-light { background: rgba(31,29,26,0.1); color: #4B4845; }
+</style>
+</head>
+<body>
+<div class="grid">
+  <div class="cell" style="background-image: url('../assets/pattern-dark.svg'); background-color: #1F1D1A;">
+    <span class="label label-dark">Pattern Dark</span>
+  </div>
+  <div class="cell" style="background-image: url('../assets/pattern-light.svg'); background-color: #F5F3F2;">
+    <span class="label label-light">Pattern Light</span>
+  </div>
+</div>
+</body>
+</html>

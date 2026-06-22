@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Activum — Gestión de Proyectos Residenciales</title>
+<link href="https://fonts.googleapis.com/css2?family=Albert+Sans:wght@500&display=swap" rel="stylesheet">
+<style>
+@font-face {
+  font-family: 'Roboto Serif';
+  src: url('../../fonts/RobotoSerif-VariableFont_GRAD_opsz_wdth_wght.ttf') format('truetype');
+  font-weight: 100 900; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: 'Roboto Serif';
+  src: url('../../fonts/RobotoSerif-Italic-VariableFont_GRAD_opsz_wdth_wght.ttf') format('truetype');
+  font-weight: 100 900; font-style: italic; font-display: swap;
+}
+@font-face {
+  font-family: 'Roboto';
+  src: url('../../fonts/Roboto-VariableFont_wdth_wght.ttf') format('truetype');
+  font-weight: 100 900; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: 'Roboto';
+  src: url('../../fonts/Roboto-Italic-VariableFont_wdth_wght.ttf') format('truetype');
+  font-weight: 100 900; font-style: italic; font-display: swap;
+}
+</style>
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { background: #F5F3F2; font-family: 'Roboto', sans-serif; }
+  ::-webkit-scrollbar { width: 5px; }
+  ::-webkit-scrollbar-track { background: #EBE3DB; }
+  ::-webkit-scrollbar-thumb { background: #D4C3B3; border-radius: 3px; }
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel">
+
+/* ── Shared tokens ── */
+const T = {
+  negro: '#1F1D1A', negro80: '#4B4845', negro50: '#8F8D8C', negro20: '#CCCAC9',
+  blanco: '#F5F3F2', beige0: '#FAF8F7', beige1: '#EBE3DB', beige2: '#D4C3B3',
+  acento: '#8E2D44', acentoDark: '#6B1F32', acentoLight: '#C06078',
+  serif: "'Roboto Serif', Georgia, serif",
+  sans:  "'Roboto', Helvetica, sans-serif",
+  albert: "'Albert Sans', sans-serif",
+};
+
+/* ── Header ── */
+const Header = ({ page, go }) => {
+  const links = ['Proyectos','Servicios','Nosotros','Contacto'];
+  return (
+    <header style={{ position:'fixed',top:0,left:0,right:0,zIndex:100,
+      background:'rgba(245,243,242,0.94)',backdropFilter:'blur(12px)',
+      borderBottom:'1px solid rgba(31,29,26,0.08)',
+      display:'flex',alignItems:'center',justifyContent:'space-between',
+      padding:'0 48px',height:'64px' }}>
+      <img src="../../assets/logo-positive.svg" style={{height:'30px',cursor:'pointer'}}
+        onClick={()=>go('home')} alt="Activum" />
+      <nav style={{display:'flex',gap:'32px',alignItems:'center'}}>
+        {links.map(l=>(
+          <span key={l} onClick={()=>go(l.toLowerCase())}
+            style={{ fontFamily:T.sans, fontSize:'11px', fontWeight:500,
+              letterSpacing:'0.1em', textTransform:'uppercase', cursor:'pointer',
+              color: page===l.toLowerCase() ? T.negro : T.negro80,
+              transition:'color 150ms' }}
+            onMouseEnter={e=>e.target.style.color=T.negro}
+            onMouseLeave={e=>e.target.style.color=page===l.toLowerCase()?T.negro:T.negro80}>
+            {l}
+          </span>
+        ))}
+      </nav>
+      <button onClick={()=>go('contacto')}
+        style={{ fontFamily:T.sans, fontSize:'11px', fontWeight:500,
+          letterSpacing:'0.1em', textTransform:'uppercase',
+          background:T.negro, color:T.blanco,
+          padding:'9px 22px', borderRadius:'4px', border:'none', cursor:'pointer' }}
+        onMouseEnter={e=>e.currentTarget.style.background=T.negro80}
+        onMouseLeave={e=>e.currentTarget.style.background=T.negro}>
+        Consultar
+      </button>
+    </header>
+  );
+};
+
+/* ── Hero ── */
+const Hero = ({ go }) => (
+  <section style={{ minHeight:'92vh', display:'flex', alignItems:'center',
+    background:T.blanco, position:'relative', overflow:'hidden' }}>
+    {/* Subtle pattern in corner — light version, low opacity */}
+    <div style={{ position:'absolute', right:0, top:0, width:'55%', height:'100%',
+      backgroundImage:'url("../../assets/pattern-light.svg")',
+      backgroundSize:'cover', backgroundPosition:'left center', opacity:0.5 }} />
+    {/* Thin accent line left */}
+    <div style={{ position:'absolute', left:0, top:'15%', bottom:'15%', width:'3px', background:T.acento }} />
+    <div style={{ position:'relative', zIndex:1, padding:'0 64px', maxWidth:'720px' }}>
+      <span style={{ fontFamily:T.sans, fontSize:'11px', fontWeight:500,
+        letterSpacing:'0.18em', textTransform:'uppercase', color:T.acento,
+        display:'block', marginBottom:'24px' }}>
+        Gestión Inmobiliaria Residencial
+      </span>
+      <h1 style={{ fontFamily:T.serif, fontSize:'clamp(44px,6.5vw,84px)',
+        fontWeight:300, letterSpacing:'-0.02em', lineHeight:1.05,
+        color:T.negro, marginBottom:'26px' }}>
+        Maximizamos el valor<br/>de tus activos
+      </h1>
+      <p style={{ fontFamily:T.serif, fontSize:'20px', fontStyle:'italic',
+        fontWeight:300, lineHeight:1.6, color:T.negro80,
+        marginBottom:'20px', maxWidth:'500px' }}>
+        Convertimos tus inversiones inmobiliarias en historias de éxito.
+      </p>
+      <p style={{ fontFamily:T.sans, fontSize:'15px', fontWeight:300,
+        lineHeight:1.7, color:T.negro80,
+        marginBottom:'44px', maxWidth:'460px' }}>
+        Soluciones estratégicas, experiencia especializada y optimización de recursos para proyectos residenciales de alta calidad.
+      </p>
+      <div style={{display:'flex',gap:'14px',alignItems:'center'}}>
+        <button onClick={()=>go('proyectos')}
+          style={{ fontFamily:T.sans, fontSize:'11px', fontWeight:500,
+            letterSpacing:'0.1em', textTransform:'uppercase',
+            background:T.negro, color:T.blanco,
+            padding:'13px 28px', borderRadius:'4px', border:'none', cursor:'pointer' }}
+          onMouseEnter={e=>e.currentTarget.style.background=T.negro80}
+          onMouseLeave={e=>e.currentTarget.style.background=T.negro}>
+          Ver proyectos
+        </button>
+        <button onClick={()=>go('nosotros')}
+          style={{ fontFamily:T.sans, fontSize:'11px', fontWeight:500,
+            letterSpacing:'0.1em', textTransform:'uppercase',
+            background:'transparent', color:T.negro,
+            padding:'12px 28px', borderRadius:'4px',
+            border:`1px solid rgba(31,29,26,0.25)`, cursor:'pointer' }}
+          onMouseEnter={e=>{e.currentTarget.style.borderColor=T.negro}}
+          onMouseLeave={e=>{e.currentTarget.style.borderColor='rgba(31,29,26,0.25)'}}>
+          Conocer el estudio
+        </button>
+      </div>
+    </div>
+    {/* Stats bar */}
+    <div style={{ position:'absolute', bottom:'0', left:'0', right:'0',
+      display:'flex', gap:'0',
+      borderTop:`1px solid rgba(31,29,26,0.08)`, zIndex:1,
+      background:T.beige1 }}>
+      {[['+200','Proyectos gestionados'],['18','Años de experiencia'],['98%','Tasa de éxito'],['12','Ciudades']].map(([n,l], i)=>(
+        <div key={l} style={{ flex:1, padding:'20px 32px',
+          borderRight: i < 3 ? '1px solid rgba(31,29,26,0.08)' : 'none' }}>
+          <div style={{fontFamily:T.serif,fontSize:'32px',fontWeight:300,color:T.negro,lineHeight:1}}>{n}</div>
+          <div style={{fontFamily:T.sans,fontSize:'10px',letterSpacing:'0.12em',textTransform:'uppercase',color:T.negro50,marginTop:'5px'}}>{l}</div>
+        </div>
+      ))}
+    </div>
+  </section>
+);
+
+/* ── Project grid ── */
+const PROJECTS = [
+  {eyebrow:'Residencial',title:'Residencial Las Encinas',loc:'Madrid',year:'2025',tag:'Entregado',tagAccent:false},
+  {eyebrow:'En gestión',title:'Torre Mirador',loc:'Valencia',year:'2026',tag:'En obra',tagAccent:false},
+  {eyebrow:'Destacado',title:'Palacio de Gracia',loc:'Barcelona',year:'2026',tag:'Nuevo',tagAccent:true},
+  {eyebrow:'Residencial',title:'Complejo Norte',loc:'Bilbao',year:'2026',tag:'En obra',tagAccent:false},
+  {eyebrow:'Premium',title:'Ático Serrano',loc:'Madrid',year:'2027',tag:'Pre-venta',tagAccent:false},
+  {eyebrow:'Residencial',title:'Mirador del Mar',loc:'Marbella',year:'2027',tag:'Nuevo',tagAccent:true},
+];
+const BGCOLS=['#D4C3B3','#1F1D1A','#EBE3DB','#4B4845','#D4C3B3','#1F1D1A'];
+
+const Projects = () => {
+  const [hov,setHov]=React.useState(null);
+  return (
+    <section style={{background:T.blanco, padding:'96px 48px'}}>
+      <div style={{display:'flex',justifyContent:'space-between',alignItems:'flex-end',marginBottom:'48px'}}>
+        <div>
+          <div style={{fontFamily:T.sans,fontSize:'11px',fontWeight:500,letterSpacing:'0.18em',textTransform:'uppercase',color:T.acento,marginBottom:'10px'}}>Portafolio</div>
+          <h2 style={{fontFamily:T.serif,fontSize:'clamp(32px,4vw,52px)',fontWeight:300,letterSpacing:'-0.02em',color:T.negro}}>Proyectos gestionados</h2>
+        </div>
+        <span style={{fontFamily:T.sans,fontSize:'11px',fontWeight:500,letterSpacing:'0.1em',textTransform:'uppercase',color:T.negro80,cursor:'pointer',textDecoration:'underline',textUnderlineOffset:'4px'}}>Ver todos →</span>
+      </div>
+      <div style={{display:'grid',gridTemplateColumns:'repeat(3,1fr)',gap:'20px'}}>
+        {PROJECTS.map((p,i)=>(
+          <div key={i}
+            onMouseEnter={()=>setHov(i)} onMouseLeave={()=>setHov(null)}
+            style={{ background:T.blanco, borderRadius:'16px', overflow:'hidden', cursor:'pointer',
+              boxShadow: hov===i ? '0 12px 40px rgba(31,29,26,0.14)' : '0 2px 10px rgba(31,29,26,0.07)',
+              transform: hov===i ? 'translateY(-4px)' : 'none',
+              transition:'all 280ms cubic-bezier(0.22,1,0.36,1)' }}>
+            <div style={{height:'150px',background:BGCOLS[i],position:'relative'}}>
+              <span style={{
+                position:'absolute',top:'12px',right:'12px',
+                background: p.tagAccent ? T.acento : 'rgba(31,29,26,0.55)',
+                color:T.blanco, padding:'3px 10px', borderRadius:'9999px',
+                fontFamily:T.sans, fontSize:'9px', fontWeight:500, letterSpacing:'0.1em', textTransform:'uppercase'
+              }}>{p.tag}</span>
+            </div>
+            <div style={{padding:'16px'}}>
+              <div style={{fontFamily:T.sans,fontSize:'9px',fontWeight:500,letterSpacing:'0.14em',textTransform:'uppercase',color:T.acento,marginBottom:'5px'}}>{p.eyebrow}</div>
+              <div style={{fontFamily:T.serif,fontSize:'20px',fontWeight:400,color:T.negro,lineHeight:1.25,marginBottom:'8px'}}>{p.title}</div>
+              <div style={{fontFamily:T.sans,fontSize:'10px',color:T.negro50,display:'flex',gap:'10px'}}>
+                <span>{p.loc}</span><span>·</span><span>{p.year}</span>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+};
+
+/* ── Services ── */
+const SERVICES = [
+  {icon:'../../assets/icons/icono-1.svg',title:'Gestión de proyectos',desc:'Coordinación integral desde el diseño hasta la entrega.'},
+  {icon:'../../assets/icons/icono-2.svg',title:'Consultoría estratégica',desc:'Análisis de viabilidad y optimización de recursos.'},
+  {icon:'../../assets/icons/icono-3.svg',title:'Control de costes',desc:'Eficiencia económica y cumplimiento de presupuesto.'},
+  {icon:'../../assets/icons/icono-4.svg',title:'Gestión comercial',desc:'Estrategias de venta adaptadas al mercado actual.'},
+  {icon:'../../assets/icons/icono-5.svg',title:'Seguimiento de obra',desc:'Supervisión técnica con máxima exigencia de calidad.'},
+];
+
+const Services = () => (
+  <section style={{background:T.blanco, padding:'96px 48px', borderTop:`1px solid rgba(31,29,26,0.07)`}}>
+    <div style={{textAlign:'center',marginBottom:'52px'}}>
+      <div style={{fontFamily:T.sans,fontSize:'11px',fontWeight:500,letterSpacing:'0.18em',textTransform:'uppercase',color:T.acento,marginBottom:'12px'}}>Servicios</div>
+      <h2 style={{fontFamily:T.serif,fontSize:'clamp(32px,4vw,52px)',fontWeight:300,letterSpacing:'-0.02em',color:T.negro}}>Lo que hacemos</h2>
+    </div>
+    <div style={{display:'grid',gridTemplateColumns:'repeat(5,1fr)',gap:'16px'}}>
+      {SERVICES.map((s,i)=>(
+        <div key={i}
+          style={{background:T.beige1,borderRadius:'16px',padding:'28px 18px',textAlign:'center',transition:'all 280ms'}}
+          onMouseEnter={e=>{e.currentTarget.style.transform='translateY(-4px)';e.currentTarget.style.boxShadow='0 10px 30px rgba(31,29,26,0.10)'}}
+          onMouseLeave={e=>{e.currentTarget.style.transform='none';e.currentTarget.style.boxShadow='none'}}>
+          <div style={{width:'52px',height:'52px',background:T.beige2,borderRadius:'14px',display:'flex',alignItems:'center',justifyContent:'center',margin:'0 auto 14px'}}>
+            <img src={s.icon} style={{width:'30px',height:'30px'}} alt="" />
+          </div>
+          <div style={{fontFamily:T.serif,fontSize:'15px',fontWeight:400,color:T.negro,marginBottom:'8px',lineHeight:1.3}}>{s.title}</div>
+          <div style={{fontFamily:T.sans,fontSize:'11px',fontWeight:300,color:T.negro80,lineHeight:1.6}}>{s.desc}</div>
+        </div>
+      ))}
+    </div>
+  </section>
+);
+
+/* ── Contact form ── */
+const Contact = () => {
+  const [sent,setSent]=React.useState(false);
+  const fieldStyle = {
+    fontFamily:T.sans, fontSize:'13px', color:T.negro,
+    background:'#FAF8F7', border:`1px solid rgba(31,29,26,0.15)`,
+    borderRadius:'6px', padding:'10px 12px', outline:'none', width:'100%',
+  };
+  const labelStyle = {
+    fontFamily:T.sans, fontSize:'10px', fontWeight:500,
+    letterSpacing:'0.1em', textTransform:'uppercase', color:T.negro80,
+  };
+  return (
+    <section style={{background:T.blanco,padding:'96px 48px'}}>
+      <div style={{maxWidth:'600px',margin:'0 auto'}}>
+        <div style={{marginBottom:'40px'}}>
+          <div style={{fontFamily:T.sans,fontSize:'11px',fontWeight:500,letterSpacing:'0.18em',textTransform:'uppercase',color:T.acento,marginBottom:'12px'}}>Contacto</div>
+          <h2 style={{fontFamily:T.serif,fontSize:'44px',fontWeight:300,letterSpacing:'-0.02em',color:T.negro,lineHeight:1.1,marginBottom:'14px'}}>Cuéntanos qué necesitas</h2>
+          <p style={{fontFamily:T.sans,fontSize:'15px',fontWeight:300,color:T.negro80,lineHeight:1.7}}>Pongamos en marcha soluciones inmobiliarias que realmente funcionan.</p>
+        </div>
+        {!sent ? (
+          <form onSubmit={e=>{e.preventDefault();setSent(true)}}
+            style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:'14px'}}>
+            {[['Nombre','text','María García'],['Email','email','correo@activum.es'],
+              ['Teléfono','tel','+34 600 000 000'],['Nº de unidades','text','20 viviendas']].map(([l,t,p])=>(
+              <div key={l} style={{display:'flex',flexDirection:'column',gap:'5px'}}>
+                <label style={labelStyle}>{l}</label>
+                <input type={t} placeholder={p} style={fieldStyle}
+                  onFocus={e=>e.target.style.borderColor=T.acento}
+                  onBlur={e=>e.target.style.borderColor='rgba(31,29,26,0.15)'} />
+              </div>
+            ))}
+            <div style={{gridColumn:'1/-1',display:'flex',flexDirection:'column',gap:'5px'}}>
+              <label style={labelStyle}>Mensaje</label>
+              <textarea rows={4} placeholder="Describa su proyecto o consulta..."
+                style={{...fieldStyle,resize:'none'}}
+                onFocus={e=>e.target.style.borderColor=T.acento}
+                onBlur={e=>e.target.style.borderColor='rgba(31,29,26,0.15)'} />
+            </div>
+            <div style={{gridColumn:'1/-1'}}>
+              <button type="submit"
+                style={{fontFamily:T.sans,fontSize:'11px',fontWeight:500,letterSpacing:'0.1em',textTransform:'uppercase',
+                  background:T.negro,color:T.blanco,padding:'13px 32px',borderRadius:'4px',border:'none',cursor:'pointer',width:'100%'}}
+                onMouseEnter={e=>e.currentTarget.style.background=T.negro80}
+                onMouseLeave={e=>e.currentTarget.style.background=T.negro}>
+                Enviar consulta
+              </button>
+            </div>
+          </form>
+        ) : (
+          <div style={{background:T.beige1,borderRadius:'16px',padding:'40px',textAlign:'center'}}>
+            <div style={{fontFamily:T.serif,fontSize:'26px',fontWeight:300,color:T.negro,marginBottom:'10px'}}>Gracias por contactarnos</div>
+            <div style={{fontFamily:T.sans,fontSize:'13px',fontWeight:300,color:T.negro80}}>Nuestro equipo se pondrá en contacto en las próximas 24 horas.</div>
+            <button onClick={()=>setSent(false)}
+              style={{marginTop:'20px',fontFamily:T.sans,fontSize:'10px',fontWeight:500,letterSpacing:'0.1em',textTransform:'uppercase',background:'none',border:'none',color:T.acento,cursor:'pointer',textDecoration:'underline'}}>
+              Enviar otra consulta
+            </button>
+          </div>
+        )}
+      </div>
+    </section>
+  );
+};
+
+/* ── Footer ── */
+const Footer = ({ go }) => (
+  <footer style={{background:T.negro,backgroundImage:'url("../../assets/pattern-dark.svg")',backgroundSize:'cover',position:'relative',overflow:'hidden'}}>
+    <div style={{position:'absolute',inset:0,background:'rgba(31,29,26,0.88)'}} />
+    <div style={{position:'relative',zIndex:1,padding:'64px 48px 36px'}}>
+      <div style={{display:'grid',gridTemplateColumns:'2fr 1fr 1fr 1fr',gap:'48px',marginBottom:'48px'}}>
+        <div>
+          <img src="../../assets/logo-negative.svg" style={{height:'36px',marginBottom:'20px'}} alt="Activum" />
+          <p style={{fontFamily:T.serif,fontSize:'17px',fontWeight:300,fontStyle:'italic',color:'rgba(235,227,219,0.55)',lineHeight:1.6,maxWidth:'240px'}}>
+            "Soluciones inmobiliarias que realmente funcionan."
+          </p>
+        </div>
+        {[['Proyectos',['Residencial','En gestión','Destacados','Entregados']],
+          ['Servicios',['Gestión de proyectos','Consultoría','Control de costes','Seguimiento']],
+          ['Compañía',['Nosotros','Equipo','Valores','Contacto']]].map(([title,links])=>(
+          <div key={title}>
+            <div style={{fontFamily:T.sans,fontSize:'10px',fontWeight:500,letterSpacing:'0.15em',textTransform:'uppercase',color:'rgba(245,243,242,0.35)',marginBottom:'16px'}}>{title}</div>
+            {links.map(l=>(
+              <span key={l} onClick={()=>go(title.toLowerCase())}
+                style={{fontFamily:T.sans,fontSize:'13px',fontWeight:300,color:'rgba(245,243,242,0.6)',display:'block',marginBottom:'10px',cursor:'pointer'}}
+                onMouseEnter={e=>e.target.style.color=T.blanco}
+                onMouseLeave={e=>e.target.style.color='rgba(245,243,242,0.6)'}>
+                {l}
+              </span>
+            ))}
+          </div>
+        ))}
+      </div>
+      <div style={{borderTop:'1px solid rgba(245,243,242,0.1)',paddingTop:'22px',display:'flex',justifyContent:'space-between'}}>
+        <span style={{fontFamily:T.sans,fontSize:'11px',color:'rgba(245,243,242,0.28)'}}>© 2025 Activum. Todos los derechos reservados.</span>
+        <span style={{fontFamily:T.sans,fontSize:'11px',color:'rgba(245,243,242,0.28)'}}>ES · EN</span>
+      </div>
+    </div>
+  </footer>
+);
+
+/* ── Page: Nosotros ── */
+const Nosotros = () => (
+  <section style={{background:T.blanco,padding:'96px 48px'}}>
+    <div style={{maxWidth:'800px',margin:'0 auto'}}>
+      <div style={{fontFamily:T.sans,fontSize:'11px',fontWeight:500,letterSpacing:'0.18em',textTransform:'uppercase',color:T.acento,marginBottom:'12px'}}>Quiénes somos</div>
+      <h2 style={{fontFamily:T.serif,fontSize:'52px',fontWeight:300,letterSpacing:'-0.02em',color:T.negro,lineHeight:1.05,marginBottom:'32px'}}>Una marca de calidad<br/>y compromiso</h2>
+      <p style={{fontFamily:T.serif,fontSize:'20px',fontStyle:'italic',fontWeight:300,color:T.negro80,lineHeight:1.6,marginBottom:'24px'}}>
+        Construimos un entorno sólido de confianza y transparencia.
+      </p>
+      <p style={{fontFamily:T.sans,fontSize:'15px',fontWeight:300,color:T.negro80,lineHeight:1.8,marginBottom:'16px'}}>
+        Nuestro compromiso es ayudar a nuestros clientes a desarrollar proyectos residenciales inmobiliarios eficientes, actualizados y de alta calidad. A través de soluciones estratégicas, una experiencia especializada y la optimización de recursos, gestionamos cada proyecto con el objetivo de maximizar su éxito.
+      </p>
+      <p style={{fontFamily:T.sans,fontSize:'15px',fontWeight:300,color:T.negro80,lineHeight:1.8}}>
+        Ofrecemos un servicio personalizado, flexible y siempre adaptado a las nuevas tendencias del mercado, asegurando que cada propuesta cumpla con las expectativas y necesidades de nuestros clientes.
+      </p>
+      <div style={{display:'grid',gridTemplateColumns:'repeat(4,1fr)',gap:'24px',marginTop:'56px'}}>
+        {[['Elegancia','y discreción'],['Sofisticación','y calidad'],['Luz','y motivación'],['Versatilidad','y flexibilidad']].map(([a,b])=>(
+          <div key={a} style={{borderTop:`2px solid ${T.acento}`,paddingTop:'16px'}}>
+            <div style={{fontFamily:T.serif,fontSize:'18px',fontWeight:400,color:T.negro,lineHeight:1.2}}>{a}</div>
+            <div style={{fontFamily:T.sans,fontSize:'12px',fontWeight:300,color:T.negro50,marginTop:'4px'}}>{b}</div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+);
+
+/* ── App shell ── */
+const App = () => {
+  const [page,setPage]=React.useState(()=>localStorage.getItem('activum_kit_page')||'home');
+  const go = p => { setPage(p); localStorage.setItem('activum_kit_page',p); window.scrollTo({top:0}); };
+
+  const pageHero = (eyebrow, title) => (
+    <div style={{background:T.blanco, padding:'80px 64px 56px', borderBottom:`1px solid rgba(31,29,26,0.08)`, position:'relative', overflow:'hidden'}}>
+      <div style={{position:'absolute',right:0,top:0,bottom:0,width:'40%',
+        backgroundImage:'url("../../assets/pattern-light.svg")',
+        backgroundSize:'cover', backgroundPosition:'left center', opacity:0.45}} />
+      <div style={{position:'absolute',left:0,top:'20%',bottom:'20%',width:'3px',background:T.acento}} />
+      <div style={{position:'relative',zIndex:1}}>
+        <div style={{fontFamily:T.sans,fontSize:'11px',fontWeight:500,letterSpacing:'0.18em',textTransform:'uppercase',color:T.acento,marginBottom:'12px'}}>{eyebrow}</div>
+        <h1 style={{fontFamily:T.serif,fontSize:'60px',fontWeight:300,color:T.negro,letterSpacing:'-0.02em'}}>{title}</h1>
+      </div>
+    </div>
+  );
+
+  return (
+    <div>
+      <Header page={page} go={go} />
+      <div style={{paddingTop:'64px'}}>
+        {page==='home' && <><Hero go={go}/><Projects/><Services/><Contact/></>}
+        {page==='proyectos' && <>{pageHero('Portafolio','Proyectos')}<Projects/></>}
+        {page==='servicios' && <>{pageHero('Lo que hacemos','Servicios')}<Services/><Contact/></>}
+        {page==='nosotros' && <>{pageHero('Quiénes somos','El estudio')}<Nosotros/></>}
+        {page==='contacto' && <>{pageHero('Hablemos','Contacto')}<Contact/></>}
+        <Footer go={go}/>
+      </div>
+    </div>
+  );
+};
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
+</script>
+</body>
+</html>

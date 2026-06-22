@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { background: #F5F3F2; font-family: 'DM Sans', sans-serif; padding: 20px; }
+.grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 8px; }
+.token { background: white; border: 1px solid rgba(31,29,26,0.08); border-radius: 8px; padding: 10px; display: flex; align-items: center; gap: 8px; }
+.dot { width: 28px; height: 28px; border-radius: 50%; flex-shrink: 0; border: 1px solid rgba(31,29,26,0.08); }
+.info {}
+.tname { font-size: 10px; font-weight: 500; color: #1F1D1A; }
+.tdesc { font-size: 9px; color: #8F8D8C; margin-top: 1px; }
+</style>
+</head>
+<body>
+<div class="grid">
+  <div class="token"><div class="dot" style="background:#1F1D1A;"></div><div class="info"><div class="tname">fg-primary</div><div class="tdesc">Negro</div></div></div>
+  <div class="token"><div class="dot" style="background:#4B4845;"></div><div class="info"><div class="tname">fg-secondary</div><div class="tdesc">Negro 80</div></div></div>
+  <div class="token"><div class="dot" style="background:#8F8D8C;"></div><div class="info"><div class="tname">fg-muted</div><div class="tdesc">Negro 50</div></div></div>
+  <div class="token"><div class="dot" style="background:#8E2D44;"></div><div class="info"><div class="tname">fg-accent</div><div class="tdesc">Acento</div></div></div>
+  <div class="token"><div class="dot" style="background:#F5F3F2; border:1px solid #ddd;"></div><div class="info"><div class="tname">bg-base</div><div class="tdesc">Blanco</div></div></div>
+  <div class="token"><div class="dot" style="background:#EBE3DB;"></div><div class="info"><div class="tname">bg-muted</div><div class="tdesc">Beige I</div></div></div>
+  <div class="token"><div class="dot" style="background:#D4C5B2;"></div><div class="info"><div class="tname">bg-strong</div><div class="tdesc">Beige II</div></div></div>
+  <div class="token"><div class="dot" style="background:#1F1D1A;"></div><div class="info"><div class="tname">bg-dark</div><div class="tdesc">Negro</div></div></div>
+</div>
+</body>
+</html>

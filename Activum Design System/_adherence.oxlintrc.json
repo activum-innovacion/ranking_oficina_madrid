@@ -1,0 +1,219 @@
+{
+  "plugins": [
+    "react",
+    "import"
+  ],
+  "rules": {
+    "react/forbid-elements": [
+      "warn",
+      {
+        "forbid": []
+      }
+    ],
+    "no-restricted-imports": [
+      "warn",
+      {
+        "patterns": [
+          {
+            "group": [
+              "ui_kits/activum/**",
+              "uploads/Activum Design System 20.36.06/ui_kits/activum/**"
+            ],
+            "message": "Import design-system components from 'index.js', not component internals."
+          }
+        ]
+      }
+    ],
+    "no-restricted-syntax": [
+      "warn",
+      {
+        "selector": "Literal[value=/#[0-9a-fA-F]{3,8}\\b/]",
+        "message": "Raw hex color — use a design-system color token via var()."
+      },
+      {
+        "selector": "Literal[value=/\\b\\d+px\\b/]",
+        "message": "Raw px value — use a design-system spacing token via var()."
+      },
+      {
+        "selector": "Literal[value=/font-family\\s*:\\s*(?!['\\\"]?(?:Roboto|Roboto Serif|Albert Sans))/i]",
+        "message": "Font not provided by the design system. Available: Roboto, Roboto Serif, Albert Sans."
+      }
+    ]
+  },
+  "overrides": [
+    {
+      "files": [
+        "**/index.js"
+      ],
+      "rules": {
+        "no-restricted-imports": "off"
+      }
+    }
+  ],
+  "x-omelette": {
+    "components": {},
+    "tokens": [
+      "--bg-accent",
+      "--bg-base",
+      "--bg-dark",
+      "--bg-muted",
+      "--bg-strong",
+      "--bg-subtle",
+      "--border-default",
+      "--border-strong",
+      "--border-subtle",
+      "--color-acento",
+      "--color-acento-dark",
+      "--color-acento-light",
+      "--color-beige-0",
+      "--color-beige-1",
+      "--color-beige-2",
+      "--color-blanco",
+      "--color-negro",
+      "--color-negro-20",
+      "--color-negro-50",
+      "--color-negro-80",
+      "--duration-fast",
+      "--duration-normal",
+      "--duration-slow",
+      "--ease-in",
+      "--ease-inout",
+      "--ease-out",
+      "--fg-accent",
+      "--fg-inverse",
+      "--fg-muted",
+      "--fg-primary",
+      "--fg-secondary",
+      "--font-body",
+      "--font-display",
+      "--font-isotipo",
+      "--font-size-2xl",
+      "--font-size-3xl",
+      "--font-size-4xl",
+      "--font-size-5xl",
+      "--font-size-base",
+      "--font-size-lg",
+      "--font-size-md",
+      "--font-size-sm",
+      "--font-size-xl",
+      "--font-size-xs",
+      "--font-weight-light",
+      "--font-weight-medium",
+      "--font-weight-regular",
+      "--font-weight-semi",
+      "--letter-spacing-normal",
+      "--letter-spacing-tight",
+      "--letter-spacing-wide",
+      "--letter-spacing-wider",
+      "--letter-spacing-widest",
+      "--line-height-normal",
+      "--line-height-relaxed",
+      "--line-height-snug",
+      "--line-height-tight",
+      "--radius-full",
+      "--radius-lg",
+      "--radius-md",
+      "--radius-sm",
+      "--radius-xl",
+      "--shadow-lg",
+      "--shadow-md",
+      "--shadow-sm",
+      "--shadow-xl",
+      "--shadow-xs",
+      "--space-1",
+      "--space-10",
+      "--space-2",
+      "--space-3",
+      "--space-4",
+      "--space-5",
+      "--space-6",
+      "--space-7",
+      "--space-8",
+      "--space-9"
+    ],
+    "tokenKinds": {
+      "--color-negro": "color",
+      "--color-blanco": "color",
+      "--color-beige-1": "color",
+      "--color-beige-2": "color",
+      "--color-acento": "color",
+      "--color-negro-80": "color",
+      "--color-negro-50": "color",
+      "--color-negro-20": "color",
+      "--color-acento-dark": "color",
+      "--color-acento-light": "color",
+      "--color-beige-0": "color",
+      "--fg-primary": "color",
+      "--fg-secondary": "color",
+      "--fg-muted": "color",
+      "--fg-inverse": "color",
+      "--fg-accent": "color",
+      "--bg-base": "color",
+      "--bg-subtle": "color",
+      "--bg-muted": "color",
+      "--bg-strong": "color",
+      "--bg-dark": "color",
+      "--bg-accent": "color",
+      "--border-subtle": "color",
+      "--border-default": "color",
+      "--border-strong": "color",
+      "--font-isotipo": "font",
+      "--font-display": "font",
+      "--font-body": "font",
+      "--font-size-xs": "font",
+      "--font-size-sm": "font",
+      "--font-size-base": "font",
+      "--font-size-md": "font",
+      "--font-size-lg": "font",
+      "--font-size-xl": "font",
+      "--font-size-2xl": "font",
+      "--font-size-3xl": "font",
+      "--font-size-4xl": "font",
+      "--font-size-5xl": "font",
+      "--font-weight-light": "font",
+      "--font-weight-regular": "font",
+      "--font-weight-medium": "font",
+      "--font-weight-semi": "font",
+      "--line-height-tight": "font",
+      "--line-height-snug": "font",
+      "--line-height-normal": "font",
+      "--line-height-relaxed": "font",
+      "--letter-spacing-tight": "font",
+      "--letter-spacing-normal": "font",
+      "--letter-spacing-wide": "font",
+      "--letter-spacing-wider": "font",
+      "--letter-spacing-widest": "font",
+      "--space-1": "spacing",
+      "--space-2": "spacing",
+      "--space-3": "spacing",
+      "--space-4": "spacing",
+      "--space-5": "spacing",
+      "--space-6": "spacing",
+      "--space-7": "spacing",
+      "--space-8": "spacing",
+      "--space-9": "spacing",
+      "--space-10": "spacing",
+      "--radius-sm": "radius",
+      "--radius-md": "radius",
+      "--radius-lg": "radius",
+      "--radius-xl": "radius",
+      "--radius-full": "radius",
+      "--shadow-xs": "shadow",
+      "--shadow-sm": "shadow",
+      "--shadow-md": "shadow",
+      "--shadow-lg": "shadow",
+      "--shadow-xl": "shadow",
+      "--ease-out": "other",
+      "--ease-in": "other",
+      "--ease-inout": "other",
+      "--duration-fast": "other",
+      "--duration-normal": "other",
+      "--duration-slow": "other"
+    },
+    "fontFamilies": [
+      "Albert Sans",
+      "Roboto",
+      "Roboto Serif"
+    ]
+  }
+}

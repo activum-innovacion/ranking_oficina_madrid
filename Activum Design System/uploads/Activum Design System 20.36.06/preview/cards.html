@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<link href="https://fonts.googleapis.com/css2?family=Roboto+Serif:ital,wght@0,300;0,400;1,400&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { background: #EBE3DB; font-family: 'Roboto', sans-serif; padding: 20px; }
+.row { display: flex; gap: 16px; }
+.card { background: #F5F3F2; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 20px rgba(31,29,26,0.10); flex: 1; }
+.card-img { height: 80px; border-radius: 16px 16px 0 0; }
+.card-body { padding: 14px; }
+.eyebrow { font-size: 9px; font-weight: 500; color: #8E2D44; letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 5px; }
+.title { font-family: 'Roboto Serif', serif; font-size: 17px; font-weight: 400; color: #1F1D1A; line-height: 1.25; margin-bottom: 5px; }
+.desc { font-size: 11px; font-weight: 300; color: #4B4845; line-height: 1.6; }
+.card-horizontal { background: #F5F3F2; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 20px rgba(31,29,26,0.10); display: flex; flex: 2; }
+.card-h-img { width: 90px; flex-shrink: 0; }
+.card-dark { background: #1F1D1A; border-radius: 16px; flex: 1; padding: 14px; box-shadow: 0 4px 20px rgba(31,29,26,0.18); }
+.card-dark .eyebrow { color: #C06078; }
+.card-dark .title { color: #F5F3F2; }
+.card-dark .desc { color: #8F8D8C; }
+</style>
+</head>
+<body>
+<div class="row">
+  <div class="card">
+    <div class="card-img" style="background:#D4C3B3;"></div>
+    <div class="card-body">
+      <div class="eyebrow">Residencial</div>
+      <div class="title">Proyecto Sierra</div>
+      <div class="desc">Gestión integral de 48 viviendas en entorno natural.</div>
+    </div>
+  </div>
+  <div class="card-horizontal">
+    <div class="card-h-img" style="background:#1F1D1A;"></div>
+    <div class="card-body" style="padding:14px;">
+      <div class="eyebrow">En gestión</div>
+      <div class="title">Torre Lumina</div>
+      <div class="desc">Coordinación técnica y comercial de 120 unidades en Madrid.</div>
+    </div>
+  </div>
+  <div class="card-dark">
+    <div class="eyebrow">Destacado</div>
+    <div class="title" style="margin-top:6px;">Complejo Norte</div>
+    <div class="desc" style="margin-top:6px;">Entrega 2026 · 96 unidades · Madrid</div>
+  </div>
+</div>
+</body>
+</html>

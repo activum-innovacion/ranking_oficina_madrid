@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { background: #F5F3F2; font-family: 'Roboto', sans-serif; padding: 20px 24px; }
+.grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.field { display: flex; flex-direction: column; gap: 5px; }
+label { font-size: 10px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: #4B4845; }
+input, select, textarea {
+  font-family: 'Roboto', sans-serif; font-size: 13px;
+  color: #1F1D1A; background: #FAF8F7;
+  border: 1px solid rgba(31,29,26,0.15); border-radius: 6px;
+  padding: 9px 12px; outline: none; transition: border-color 200ms;
+}
+input:focus, select:focus { border-color: #8E2D44; }
+input::placeholder { color: #CCCAC9; }
+.input-error { border-color: #8E2D44; background: #FDF5F6; }
+.error-msg { font-size: 10px; color: #8E2D44; }
+select { appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%234B4845'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 12px center; padding-right: 28px; }
+</style>
+</head>
+<body>
+<div class="grid">
+  <div class="field"><label>Nombre</label><input type="text" placeholder="María García"></div>
+  <div class="field"><label>Email</label><input type="email" placeholder="correo@activum.es"></div>
+  <div class="field"><label>Tipo de proyecto</label>
+    <select><option>Seleccionar</option><option>Residencial</option><option>Mixto</option></select>
+  </div>
+  <div class="field">
+    <label>Unidades</label>
+    <input type="text" class="input-error" value="5 unidades">
+    <div class="error-msg">Mínimo 20 unidades por proyecto</div>
+  </div>
+</div>
+</body>
+</html>

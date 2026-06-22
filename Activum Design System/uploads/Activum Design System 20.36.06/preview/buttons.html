@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { background: #F5F3F2; font-family: 'Roboto', sans-serif; padding: 20px 24px; }
+.row { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; flex-wrap: wrap; }
+.row:last-child { margin-bottom: 0; }
+button { font-family: 'Roboto', sans-serif; cursor: pointer; border: none; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 500; transition: all 200ms; }
+.btn-primary { background: #1F1D1A; color: #F5F3F2; padding: 11px 24px; border-radius: 4px; }
+.btn-primary:hover { background: #4B4845; }
+.btn-accent { background: #8E2D44; color: #F5F3F2; padding: 11px 24px; border-radius: 4px; }
+.btn-accent:hover { background: #6B1F32; }
+.btn-outline { background: transparent; color: #1F1D1A; border: 1px solid rgba(31,29,26,0.35); padding: 10px 24px; border-radius: 4px; }
+.btn-outline:hover { border-color: #1F1D1A; }
+.btn-ghost { background: transparent; color: #1F1D1A; padding: 10px 0; font-size: 11px; border: none; text-decoration: underline; text-underline-offset: 3px; }
+.dark-row { background: #1F1D1A; padding: 14px 16px; border-radius: 8px; }
+.btn-inverse { background: #F5F3F2; color: #1F1D1A; padding: 11px 24px; border-radius: 4px; }
+.btn-outline-inv { background: transparent; color: #F5F3F2; border: 1px solid rgba(245,243,242,0.3); padding: 10px 24px; border-radius: 4px; }
+.btn-sm { font-size: 10px; padding: 7px 16px; }
+.btn-lg { font-size: 12px; padding: 14px 32px; }
+</style>
+</head>
+<body>
+  <div class="row">
+    <button class="btn-primary">Consultar proyecto</button>
+    <button class="btn-accent">Contactar</button>
+    <button class="btn-outline">Ver más</button>
+    <button class="btn-ghost">Descubrir →</button>
+  </div>
+  <div class="row">
+    <button class="btn-primary btn-sm">Pequeño</button>
+    <button class="btn-primary">Normal</button>
+    <button class="btn-primary btn-lg">Grande</button>
+  </div>
+  <div class="row dark-row">
+    <button class="btn-inverse">Iniciar proyecto</button>
+    <button class="btn-outline-inv">Conocer más</button>
+  </div>
+</body>
+</html>

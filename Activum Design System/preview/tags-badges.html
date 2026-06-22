@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<!-- @dsCard group="Components" name="Tags & Badges" subtitle="Status pills and category tags" viewport="700x180" -->
+<html>
+<head>
+<meta charset="UTF-8">
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { background: #F5F3F2; font-family: 'Roboto', sans-serif; padding: 20px 24px; }
+.row { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; margin-bottom: 12px; }
+.row:last-child { margin-bottom: 0; }
+.tag { display: inline-flex; align-items: center; padding: 4px 12px; border-radius: 9999px; font-size: 10px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; }
+.tag-dark { background: #1F1D1A; color: #F5F3F2; }
+.tag-outline { border: 1px solid rgba(31,29,26,0.25); color: #1F1D1A; }
+.tag-beige { background: #EBE3DB; color: #1F1D1A; }
+.tag-accent { background: #8E2D44; color: #F5F3F2; }
+.tag-accent-soft { background: #F9EEF0; color: #8E2D44; }
+.badge { display: inline-flex; align-items: center; justify-content: center; width: 20px; height: 20px; border-radius: 9999px; font-size: 10px; font-weight: 500; }
+.badge-dark { background: #1F1D1A; color: #F5F3F2; }
+.badge-accent { background: #8E2D44; color: #F5F3F2; }
+.chip { display: inline-flex; align-items: center; gap: 5px; padding: 5px 10px 5px 5px; border-radius: 9999px; background: #EBE3DB; font-size: 10px; color: #1F1D1A; }
+.chip-icon { width: 18px; height: 18px; background: #D4C5B2; border-radius: 50%; }
+</style>
+</head>
+<body>
+  <div class="row">
+    <span class="tag tag-dark">Residencial</span>
+    <span class="tag tag-outline">Comercial</span>
+    <span class="tag tag-beige">Premium</span>
+    <span class="tag tag-accent">Nuevo</span>
+    <span class="tag tag-accent-soft">Exclusivo</span>
+  </div>
+  <div class="row">
+    <span class="badge badge-dark">3</span>
+    <span class="badge badge-accent">!</span>
+    <span class="chip"><span class="chip-icon"></span>Proyecto activo</span>
+    <span class="chip"><span class="chip-icon"></span>Entrega 2026</span>
+  </div>
+</body>
+</html>
