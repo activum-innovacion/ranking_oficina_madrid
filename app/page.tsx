@@ -12,8 +12,6 @@ type Data = {
   persistente: boolean;
 };
 
-const MEDALLAS = ["🥇", "🥈", "🥉"];
-
 function iniciales(nombre: string): string {
   return nombre.trim().charAt(0).toUpperCase();
 }
@@ -44,17 +42,11 @@ export default function Home() {
 
   useEffect(() => {
     cargar();
-    if (typeof window !== "undefined") {
-      const periodoVotado = window.localStorage.getItem("activum_voto_periodo");
-      // Se resuelve realmente contra el periodo del servidor más abajo.
-      if (periodoVotado) setYaVotado(true);
-    }
   }, []);
 
   // Sincroniza el flag local con el periodo real del servidor.
   useEffect(() => {
-    if (!data) return;
-    if (typeof window === "undefined") return;
+    if (!data || typeof window === "undefined") return;
     const periodoVotado = window.localStorage.getItem("activum_voto_periodo");
     setYaVotado(periodoVotado === data.periodo);
   }, [data]);
@@ -83,7 +75,7 @@ export default function Home() {
       window.localStorage.setItem("activum_voto_periodo", json.periodo ?? "");
       setMensaje({
         tipo: "ok",
-        texto: `¡Voto registrado para ${nombrePorSlug(seleccion)}! Gracias por participar.`,
+        texto: `Voto registrado para ${nombrePorSlug(seleccion)}. Gracias por participar.`,
       });
     } catch {
       setMensaje({ tipo: "err", texto: "Error de red. Inténtalo de nuevo." });
@@ -98,30 +90,29 @@ export default function Home() {
     <>
       <header className="hero">
         <div className="hero__inner">
-          <div className="brand">
-            <span className="brand__dot" />
-            Activum
+          <div className="topbar">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img className="logo" src="/brand/logo-negative.svg" alt="Activum" />
+            <span className="sede">Oficinas de Madrid</span>
           </div>
+
+          <p className="eyebrow on-dark">Reconocimiento interno</p>
           <h1>
-            Empleado del <span className="accent">Mes</span>
-            <br />
-            Oficinas de Madrid
+            Empleado del <em>mes</em>
           </h1>
           <p className="lead">
-            Reconoce a quien marca la diferencia. Vota a tu compañero o compañera y
+            Reconoce a quien marca la diferencia. Vota a tu compañera o compañero y
             consulta el ranking en directo.
           </p>
+
           <div className="premio">
-            <span className="premio__emoji">🧁</span>
-            <span>
+            <span className="premio__emoji" aria-hidden="true">
+              🧁
+            </span>
+            <span className="premio__texto">
               El empleado del mes gana un <strong>pastelito</strong>.
             </span>
           </div>
-          {data && (
-            <div className="periodo-chip">
-              <span>●</span> Votación de {data.etiqueta} · se reinicia el día 1
-            </div>
-          )}
         </div>
       </header>
 
@@ -133,10 +124,15 @@ export default function Home() {
           </div>
         )}
 
-        <section className="panel votar">
-          <div className="section-title">
-            <h2>Emite tu voto</h2>
-            <span className="muted">Un voto por persona y mes</span>
+        <section className="panel">
+          <div className="section-head">
+            <div>
+              <p className="eyebrow">Tu voto</p>
+              <h2>Emite tu voto</h2>
+            </div>
+            <span className="muted">
+              {data ? `Votación de ${data.etiqueta}` : ""} · un voto por persona
+            </span>
           </div>
 
           <div className="grid" role="radiogroup" aria-label="Candidatos">
@@ -167,9 +163,7 @@ export default function Home() {
             >
               {enviando ? "Enviando…" : yaVotado ? "Ya has votado" : "Votar"}
             </button>
-            {mensaje && (
-              <span className={`aviso ${mensaje.tipo}`}>{mensaje.texto}</span>
-            )}
+            {mensaje && <span className={`aviso ${mensaje.tipo}`}>{mensaje.texto}</span>}
             {yaVotado && !mensaje && (
               <span className="aviso ok">
                 Gracias, ya has votado este mes. Vuelve el día 1.
@@ -178,9 +172,12 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="panel ranking">
-          <div className="section-title">
-            <h2>Ranking en directo</h2>
+        <section className="panel">
+          <div className="section-head">
+            <div>
+              <p className="eyebrow">Clasificación</p>
+              <h2>Ranking en directo</h2>
+            </div>
             <span className="muted">
               {data ? `${data.total} voto${data.total === 1 ? "" : "s"} este mes` : "…"}
             </span>
@@ -188,14 +185,13 @@ export default function Home() {
 
           <ol className="rank-list">
             {data?.resultados.map((r, i) => {
-              const topClass = i < 3 ? ` top${i + 1}` : "";
+              const topClass = i === 0 ? " top1" : "";
               const pct = Math.round((r.votos / maxVotos) * 100);
               return (
                 <li key={r.slug} className={`rank-item${topClass}`}>
                   <div className="rank-pos">{i + 1}</div>
                   <div className="rank-main">
                     <div className="rank-name">
-                      {i < 3 && <span className="medal">{MEDALLAS[i]}</span>}
                       {nombrePorSlug(r.slug)}
                       {i === 0 && r.votos > 0 && (
                         <span className="premio-pill">🧁 Pastelito</span>
@@ -217,8 +213,14 @@ export default function Home() {
       </main>
 
       <footer className="footer">
-        Activum · Reconocimiento interno — Oficinas de Madrid · El ranking se reinicia
-        automáticamente el primer día de cada mes.
+        <div className="footer__inner">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img className="logo-foot" src="/brand/logo-positive.svg" alt="Activum" />
+          <span>
+            Reconocimiento interno · Oficinas de Madrid. El ranking se reinicia
+            automáticamente el primer día de cada mes.
+          </span>
+        </div>
       </footer>
     </>
   );

@@ -45,10 +45,18 @@ git push -u origin main
 Sin Upstash la app despliega y se ve, pero los votos no se guardan de forma
 permanente (aparece un aviso en la página).
 
-## Personalizar la marca
+## Marca (Activum Design System)
 
-Los colores y estilos de Activum están en variables CSS al inicio de
-[`app/globals.css`](app/globals.css) (`--activum-navy`, `--activum-gold`, …).
-Cámbialos ahí para afinar la marca con exactitud.
+La landing usa el **Activum Design System** (Rebranding 2025), incluido en la carpeta
+`Activum Design System/`:
+
+- **Paleta:** crema `#F5F3F2`, beige, negro `#1F1D1A` y acento burdeos `#8E2D44`.
+- **Tipografía:** Roboto Serif (titulares), Roboto (cuerpo), Albert Sans (isotipo),
+  cargadas desde Google Fonts en [`app/layout.tsx`](app/layout.tsx).
+- **Logo y patrón:** en [`public/brand/`](public/brand).
+
+Los tokens están en variables CSS al inicio de [`app/globals.css`](app/globals.css)
+(`--color-acento`, `--bg-base`, `--font-display`, …). La fuente original de tokens es
+[`Activum Design System/colors_and_type.css`](Activum%20Design%20System/colors_and_type.css).
 
 La lista de personas está en [`lib/empleados.ts`](lib/empleados.ts).

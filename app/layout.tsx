@@ -1,5 +1,28 @@
 import type { Metadata } from "next";
+import { Roboto, Roboto_Serif, Albert_Sans } from "next/font/google";
 import "./globals.css";
+
+const robotoSerif = Roboto_Serif({
+  subsets: ["latin"],
+  weight: ["300", "400", "500"],
+  style: ["normal", "italic"],
+  variable: "--font-display",
+  display: "swap",
+});
+
+const roboto = Roboto({
+  subsets: ["latin"],
+  weight: ["300", "400", "500"],
+  variable: "--font-body",
+  display: "swap",
+});
+
+const albertSans = Albert_Sans({
+  subsets: ["latin"],
+  weight: ["500"],
+  variable: "--font-isotipo",
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   title: "Activum · Empleado del Mes — Madrid",
@@ -13,7 +36,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="es">
+    <html
+      lang="es"
+      className={`${robotoSerif.variable} ${roboto.variable} ${albertSans.variable}`}
+    >
       <body>{children}</body>
     </html>
   );
